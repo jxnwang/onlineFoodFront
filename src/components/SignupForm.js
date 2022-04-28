@@ -28,7 +28,7 @@ class SignupForm extends React.Component {
         this.setState({
           displayModal: false,
         });
-        message.success(`Successfully signed up`);
+        message.success("Successfully signed up");
       })
       .catch((err) => {
         message.error(err.message);
