@@ -1,26 +1,42 @@
 //all these js should atart with >=0 import and >=1 export
-
-import { Layout } from "antd";
+import { Layout, Typography } from "antd";
+import { useState } from "react";
+import FoodList from "./components/FoodList";
+import LoginForm from "./components/LoginForm";
+import MyCart from "./components/MyCart";
+import SignupForm from "./components/SignupForm";
 
 const { Header, Content } = Layout;
+const { Title } = Typography;
 
 function App() {
-  //when you use <App/> react will know this is a component
-  //or it is just a function
+  const [authed, setAuthed] = useState(false);
+
   return (
     <Layout style={{ height: "100vh" }}>
-      <Header>header</Header>
+      <Header>
+        <div className="header">
+          <Title
+            level={2}
+            style={{ color: "white", lineHeight: "inherit", marginBottom: 0 }}
+          >
+            Lai Food
+          </Title>
+          <div>{authed ? <MyCart /> : <SignupForm />}</div>
+        </div>
+      </Header>
       <Content
         style={{
-          //vh: view height, only change when cliuent resize the view, not like px.
-          //{}: don't translate inside. outside is jsx, inside is normal js
-          //{{}} inside {} : an object outside {}: translation sign
-          padding: "50px",//box model spacing
-          maxHeight: "calc(100% - 64px)",//parent component's 100% - 64(header's height)
-          overflowY: "auto",//generates rolling bar when height > max
+          padding: "50px",
+          maxHeight: "calc(100% - 64px)",
+          overflowY: "auto",
         }}
       >
-        content
+        {authed ? (
+          <FoodList />
+        ) : (
+          <LoginForm onSuccess={() => setAuthed(true)} />
+        )}
       </Content>
     </Layout>
   );
